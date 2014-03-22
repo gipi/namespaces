@@ -31,6 +31,7 @@ usage(char *pname)
     fprintf(stderr, "    -u   new UTS namespace\n");
     fprintf(stderr, "    -U   new user namespace\n");
     fprintf(stderr, "    -v   Display verbose messages\n");
+    fprintf(stderr, "    -h   Display this help\n");
     exit(EXIT_FAILURE);
 }
 
@@ -56,6 +57,9 @@ main(int argc, char *argv[])
     flags = 0;
     verbose = 0;
 
+    if (argc < 2)
+        usage(argv[0]);
+
     /* Parse command-line options. The initial '+' character in
        the final getopt() argument prevents GNU-style permutation
        of command-line options. That's useful, since sometimes
@@ -63,7 +67,7 @@ main(int argc, char *argv[])
        has command-line options. We don't want getopt() to treat
        those as options to this program. */
 
-    while ((opt = getopt(argc, argv, "+imnpuUv")) != -1) {
+    while ((opt = getopt(argc, argv, "+imnpuUvh")) != -1) {
         switch (opt) {
         case 'i': flags |= CLONE_NEWIPC;        break;
         case 'm': flags |= CLONE_NEWNS;         break;
@@ -72,6 +76,7 @@ main(int argc, char *argv[])
         case 'u': flags |= CLONE_NEWUTS;        break;
         case 'U': flags |= CLONE_NEWUSER;       break;
         case 'v': verbose = 1;                  break;
+        case 'h':
         default:  usage(argv[0]);
         }
     }
