@@ -7,3 +7,10 @@ Experiments around Linux's namespaces
       PID TTY      STAT   TIME COMMAND
         1 pts/0    S      0:00 sh
         4 pts/0    R+     0:00 ps ax
+
+It's the same as running
+
+    $ sudo unshare --mount-proc --fork -m -p /bin/bash
+    sh-4.2# ps ax
+      PID TTY      STAT   TIME COMMAND
+        1 pts/0    S      0:00 sh
