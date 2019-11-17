@@ -14,3 +14,30 @@ It's the same as running
     sh-4.2# ps ax
       PID TTY      STAT   TIME COMMAND
         1 pts/0    S      0:00 sh
+
+## Mounting a new root filesystem
+
+```
+$ sudo unshare -m
+# mount --bind rootfs rootfs
+# cd rootfs/
+# pivot_root . put_old
+# cd /
+/# ls
+bin      dev      etc      home     lib      media    mnt      opt      proc     put_old  root     run      sbin     srv      sys      tmp      usr      var
+/# mount
+mount: no /proc/mounts
+/# umount -l put_old/
+/# ls put_old/
+/# mount
+mount: no /proc/mounts
+/# mount -t proc proc /proc
+/# mount
+/dev/sdb1 on / type ext4 (rw,relatime)
+proc on /proc type proc (rw,relatime)
+```
+
+## Links
+
+ - https://stackoverflow.com/questions/44666700/unshare-pid-bin-bash-fork-cannot-allocate-memory/45973522
+ - https://blog.mister-muffin.de/2015/10/25/unshare-without-superuser-privileges/
